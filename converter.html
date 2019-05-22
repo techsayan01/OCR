@@ -43,6 +43,7 @@
               </ul>
             </div> -->
           </div>
+
         </div>
       </div>
       <div class="navbar navbar-dark bg-dark box-shadow">
@@ -61,18 +62,24 @@
     <main role="main">
 
       <section class="jumbotron text-center">
-        <div class="container">
-          <h1 class="jumbotron-heading">Converter</h1>
-          <p class="lead text-muted">Select an PDF from your filesystem and convert it to an image</p>
-          <p>
-            <img id="imageSrc" alt="No Image" />
-            <input type="file" id="fileInput" name="file" class="btn btn-primary my-2"/>
-            <!-- <a href="#" class="btn btn-secondary my-2">Secondary action</a> -->
-          </p>
+        <div class="container d-flex justify-content-between align-items-center">
+          <div id="converterParent">
+            <h1 class="jumbotron-heading">Converter</h1>
+            <p class="lead text-muted">Select an PDF from your filesystem and convert it to an image</p>
+            <p>
+              <img id="imageSrc"  />
+              <!-- <a href="#" class="btn btn-secondary my-2">Secondary action</a> -->
+              
+            </p>
+              <input type="file" id="fileInput" name="file" class="btn btn-primary my-2"/>
+
+          </div>
+
+          <button class="btn-lg btn-primary ml-2" id="convertBtn" onclick=resize()>Convert</button>
+
         </div>
         <div class="form-group">
           <h1 class="jumbotron-heading">Output</h1>
-          <button class="btn-lg btn-primary" onclick=resize()>Convert</button>
           <canvas id="canvasOutput"></canvas>
           <textarea class="form-control" id="alltext" style='height:-webkit-fill-available'></textarea>
         </div>
@@ -114,7 +121,8 @@
         console.log("called")
 
         let crop = new Cropper(document.getElementById('imageSrc'), {
-          aspectRatio: 16 / 9,
+          aspectRatio: NaN,
+          autoCrop: false,
           crop(event) {
             console.log(event.viewBox)
             console.log(event.detail.x);
@@ -150,6 +158,10 @@
         src.delete();
         dst.delete();
     }
+
+    $('#convertBtn').on('click',function(){
+      $('.cropper-container.cropper-bg').addClass('d-none');
+    });
   </script>
   </body>
 </html>
